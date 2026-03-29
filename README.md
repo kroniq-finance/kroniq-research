@@ -28,5 +28,5 @@ in real time using cross-asset Hidden Markov Models.
 Python | pandas | numpy | matplotlib | yfinance | hmmlearn
 
 ### Founder
-Sumanth Polavarapu — Data Engineer @ Capital One
+Sumanth Polavarapu — Data Engineer @ Capital One.
 Building Kroniq: the AWS of quantitative finance.
