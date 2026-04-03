@@ -27,6 +27,9 @@ in real time using cross-asset Hidden Markov Models.
 ### Stack
 Python | pandas | numpy | matplotlib | yfinance | hmmlearn
 
+## Week 2 — Quant Risk Analysis (Mar 30 – Apr 3) | File | Key Result | |------|-----------| | kroniq_week2_montecarlo.ipynb | Sharpe 0.5308 · Drawdown -33.72% | | kroniq_week2_var_cvar.ipynb | VaR -1.93% · CVaR -3.20% · 11.58% gap | | kroniq_week2_regime_routing.ipynb | 7×6 routing table — Engine 2 |
+
 ### Founder
 Sumanth Polavarapu — Data Engineer @ Capital One.
 Building Kroniq: the AWS of quantitative finance.
+
