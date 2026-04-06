@@ -33,3 +33,25 @@ Python | pandas | numpy | matplotlib | yfinance | hmmlearn
 Sumanth Polavarapu — Data Engineer @ Capital One.
 Building Kroniq: the AWS of quantitative finance.
 
+## Week 3 Results (April 6-12, 2026)
+
+### Model selection — BIC sweep K=3..9
+| K | BIC | Min state days | Decision |
+|---|-----|---------------|----------|
+| 3 | 24,724.7 | — | Rejected |
+| 4 | 23,852.4 | — | Rejected |
+| **5** | **22,867.2** | **233 days** | **★ Production model** |
+| 6 | 23,035.0 | 24 days | Rejected (unstable) |
+| 7 | 23,048.8 | 9 days | Rejected (unstable) |
+| 8 | 22,521.7 | 13 days | Rejected (unstable) |
+| 9 | 22,720.8 | — | Rejected |
+
+### v4 Production model (K=5, 9 features)
+- Static OOS Sharpe: **1.107** | MaxDD: **-8.37%** | CAGR: 7.94%
+- Walk-forward OOS Sharpe: **0.881** | MaxDD: -17.46% | CAGR: 9.97%
+- Buy-and-hold Sharpe: 0.859
+- 141-day COVID early warning (credit spreads)
+- All 3 sanity checks pass
+
+### Transition matrix persistence
+Low-Vol: 95.5% | Bull: 92.7% | Neutral: 92.5% | Macro: 81.7% | Crisis: 73.0%
