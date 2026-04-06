@@ -1,0 +1,97 @@
+Test 1 — No key → expect 401:
+bashcurl -s http://localhost:8000/regime | python3 -m json.tool
+Test 2 — Wrong key → expect 403:
+bashcurl -s http://localhost:8000/regime -H "X-API-Key: fake-key" | python3 -m json.tool
+Test 3 — Valid key → expect 200 with regime JSON:
+bashcurl -s http://localhost:8000/regime -H "X-API-Key: test-key-001" | python3 -m json.tool
+Test 4 — Health, no key → expect 200:
+bashcurl -s http://localhost:8000/health | python3 -m json.tool
+Test 5 — Usage, valid key → expect quota status:
+bashcurl -s http://localhost:8000/usage -H "X-API-Key: test-key-001" | python3 -m json.tool
+Test 6 — Rate limit, run 3 quick requests and check count goes up:
+bashcurl -s http://localhost:8000/regime -H "X-API-Key: test-key-001" > /dev/null
+curl -s http://localhost:8000/regime -H "X-API-Key: test-key-001" > /dev/null
+curl -s http://localhost:8000/usage -H "X-API-Key: test-key-001" | python3 -m json.tool
+
+
+
+Test 1 : Output
+
+"detail": "Missing API key. Include X-API-Key header with your request. Contact support@kroniq.finance to request access.
+
+Test 2 : Output
+
+{
+    "detail": "Invalid API key. Contact support@kroniq.finance to request access."
+}
+
+Test 3 : Output
+
+{
+    "regime": "Macro",
+    "confidence": 0.9999999999929514,
+    "allocation": 0.3,
+    "signal_driver_hint": "credit_spread OAS \u2014 primary (Macro/Crisis rule)",
+    "all_posteriors": [
+        {
+            "state_id": 0,
+            "regime": "Macro",
+            "probability": 0.9999999999929514
+        },
+        {
+            "state_id": 3,
+            "regime": "Bull",
+            "probability": 7.1241700293850076e-12
+        },
+        {
+            "state_id": 4,
+            "regime": "Neutral",
+            "probability": 4.3606820759511595e-16
+        },
+        {
+            "state_id": 1,
+            "regime": "Low-Vol",
+            "probability": 8.559507602788109e-45
+        },
+        {
+            "state_id": 2,
+            "regime": "Crisis",
+            "probability": 1.4044287604007493e-68
+        }
+    ],
+    "as_of": "2026-04-02",
+    "as_of_note": "Latest fully aligned feature date. FRED credit spreads update with 1-3 day lag. Run date may differ from as_of.",
+    "model_train_end": "2020-12-31",
+    "mode": "live"
+}
+
+Test 4 : Output
+
+{
+    "status": "ok",
+    "ready": true,
+    "mode": "live",
+    "model": "kroniq_regime_radar_v5",
+    "trained_on": 1491,
+    "train_end": "2020-12-31",
+    "as_of": "2026-04-02",
+    "started_at": "2026-04-06T23:33:45.177349+00:00"
+}
+
+Test 5 output : {
+    "api_key_hash": "b2d132fe",
+    "requests_today": 1,
+    "limit_per_day": 100,
+    "remaining_today": 99,
+    "utc_date": "2026-04-06",
+    "resets": "midnight UTC"
+}
+
+Test 6 Output : {
+    "api_key_hash": "b2d132fe",
+    "requests_today": 3,
+    "limit_per_day": 100,
+    "remaining_today": 97,
+    "utc_date": "2026-04-06",
+    "resets": "midnight UTC"
+}
